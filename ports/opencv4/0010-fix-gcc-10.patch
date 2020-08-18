@@ -1,0 +1,36 @@
+diff --git a/3rdparty/carotene/CMakeLists.txt b/3rdparty/carotene/CMakeLists.txt
+index bfa9368..2054c51 100644
+--- a/3rdparty/carotene/CMakeLists.txt
++++ b/3rdparty/carotene/CMakeLists.txt
+@@ -20,8 +20,11 @@ if(CMAKE_COMPILER_IS_GNUCC)
+     # - matchTemplate about 5-10%
+     # - goodFeaturesToTrack 10-20%
+     # - cornerHarris 30% for some cases
+-
+-    set_source_files_properties(${carotene_sources} COMPILE_FLAGS "--param ipcp-unit-growth=100000 --param inline-unit-growth=100000 --param large-stack-frame-growth=5000")
++    if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 10.0)
++        set_source_files_properties(${carotene_sources} COMPILE_FLAGS "--param ipa-cp-unit-growth=100000 --param inline-unit-growth=100000 --param large-stack-frame-growth=5000")
++    else()
++        set_source_files_properties(${carotene_sources} COMPILE_FLAGS "--param ipcp-unit-growth=100000 --param inline-unit-growth=100000 --param large-stack-frame-growth=5000")
++    endif()
+ endif()
+ 
+ add_library(carotene_objs OBJECT
+diff --git a/3rdparty/carotene/hal/CMakeLists.txt b/3rdparty/carotene/hal/CMakeLists.txt
+index c4b9aca..d245b6e 100644
+--- a/3rdparty/carotene/hal/CMakeLists.txt
++++ b/3rdparty/carotene/hal/CMakeLists.txt
+@@ -90,8 +90,11 @@ set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS ${carotene_defs})
+     #   matchTemplate about 5-10%
+     #   goodFeaturesToTrack 10-20%
+     #   cornerHarris 30% for some cases
+-    set_source_files_properties(impl.cpp $<TARGET_OBJECTS:carotene_objs> COMPILE_FLAGS "--param ipcp-unit-growth=100000 --param inline-unit-growth=100000 --param large-stack-frame-growth=5000")
+-#    set_source_files_properties(impl.cpp $<TARGET_OBJECTS:carotene_objs> COMPILE_FLAGS "--param ipcp-unit-growth=100000 --param inline-unit-growth=100000 --param large-stack-frame-growth=5000")
++    if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 10.0)
++      set_source_files_properties(impl.cpp $<TARGET_OBJECTS:carotene_objs> COMPILE_FLAGS "--param ipa-cp-unit-growth=100000 --param inline-unit-growth=100000 --param large-stack-frame-growth=5000")
++    else()
++      set_source_files_properties(impl.cpp $<TARGET_OBJECTS:carotene_objs> COMPILE_FLAGS "--param ipcp-unit-growth=100000 --param inline-unit-growth=100000 --param large-stack-frame-growth=5000")
++    endif()
+   endif()
+ 
+ add_library(tegra_hal STATIC $<TARGET_OBJECTS:carotene_objs>)

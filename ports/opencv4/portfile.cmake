@@ -22,6 +22,7 @@ vcpkg_from_github(
       0003-force-package-requirements.patch
       0004-fix-policy-CMP0057.patch
       0009-fix-uwp.patch
+      0010-fix-gcc-10.patch
 )
 
 string(COMPARE EQUAL "${VCPKG_CRT_LINKAGE}" "static" BUILD_WITH_STATIC_CRT)
