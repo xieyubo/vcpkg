@@ -1,0 +1,13 @@
+diff --git a/include/boost/log/sinks/basic_sink_frontend.hpp b/include/boost/log/sinks/basic_sink_frontend.hpp
+index 3686bc5..6a0329e 100644
+--- a/include/boost/log/sinks/basic_sink_frontend.hpp
++++ b/include/boost/log/sinks/basic_sink_frontend.hpp
+@@ -334,7 +334,7 @@ private:
+ #if !defined(BOOST_LOG_NO_THREADS)
+ 
+     //! State version
+-    volatile unsigned int m_Version;
++    unsigned int m_Version;
+ 
+     //! Formatter functor
+     formatter_type m_Formatter;
