@@ -6,6 +6,8 @@ vcpkg_from_github(
     REF boost-1.73.0
     SHA512 150013753d5060618c431ed9a819e3ec666bdba42cf3d463335ca49d66b8d6e800d5419332011f5ce05f19bc9c67a1cebc547279bf2931258ff7753a67796f2f
     HEAD_REF master
+    PATCHES
+        0001-fix-cpp20-warning.patch
 )
 
 file(READ "${SOURCE_PATH}/build/Jamfile.v2" _contents)
