@@ -35,6 +35,14 @@ else()
     list(APPEND B2_OPTIONS address-model=32)
 endif()
 
+if(CMAKE_HOST_SYSTEM_PROCESSOR STREQUAL "s390x")
+    list(APPEND B2_OPTIONS architecture=s390x)
+elseif(VCPKG_TARGET_ARCHITECTURE STREQUAL "arm" OR VCPKG_TARGET_ARCHITECTURE STREQUAL "arm64")
+    list(APPEND B2_OPTIONS architecture=arm)
+else()
+    list(APPEND B2_OPTIONS architecture=x86)
+endif()
+
 if(APPLE)
     list(APPEND B2_OPTIONS target-os=darwin toolset=clang)
 elseif(WIN32)
@@ -133,12 +141,6 @@ if(NOT NUMBER_OF_PROCESSORS)
     set(NUMBER_OF_PROCESSORS 1)
 endif()
 
-if(VCPKG_TARGET_ARCHITECTURE STREQUAL "arm64")
-    set(_arch "arm")
-else()
-    set(_arch "x86")
-endif()
-
 add_custom_target(boost ALL
     COMMAND "${B2_EXE}"
         --user-config=${CMAKE_CURRENT_BINARY_DIR}/user-config.jam
@@ -164,7 +166,6 @@ add_custom_target(boost ALL
         --hash
         -q
 
-        architecture=${_arch}
         threading=multi
         debug-symbols=on
 
