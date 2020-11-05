@@ -13,7 +13,7 @@ endif()
 _find_package(${ARGS})
 
 if(Protobuf_FOUND AND VCPKG_HOST_TRIPLET AND NOT VCPKG_HOST_TRIPLET STREQUAL VCPKG_TARGET_TRIPLET)
-    foreach(prop IMPORTED_LOCATUON IMPORTED_LOCATION_RELEASE IMPORTED_LOCATION_DEBUG)
+    foreach(prop IMPORTED_LOCATION IMPORTED_LOCATION_RELEASE IMPORTED_LOCATION_DEBUG)
         get_target_property(_protoc_exe_path protobuf::protoc ${prop})
         if(_protoc_exe_path)
             string(REPLACE "/${VCPKG_TARGET_TRIPLET}/" "/${VCPKG_HOST_TRIPLET}/" _protoc_exe_path "${_protoc_exe_path}")
